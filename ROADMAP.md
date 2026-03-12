@@ -39,7 +39,7 @@
 
 ## 📍 Fase 4: Regras de Negócio Nível 2 (Sexta)
 
-- [ ] Criar CRUD básico de Produtos (Listar/Criar).
+- [X] Criar CRUD básico de Produtos (Listar/Criar).
 - [ ] Criar rota de Compra (`POST /transactions`):
     - [ ] Receber `product_id`, `quantity` e dados do cartão.
     - [ ] Calcular valor total no back-end (preço do banco \* quantidade).
