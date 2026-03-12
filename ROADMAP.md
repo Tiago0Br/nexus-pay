@@ -22,24 +22,24 @@
 - [X] Instalar e configurar o Laravel Sanctum.
 - [X] Criar rota e controller de Login (`POST /login`).
 - [X] Proteger rotas privadas com middleware de autenticação.
-- [ ] Criar CRUD básico de Produtos (Listar/Criar).
-- [ ] Criar rotas de gerenciamento de Gateways:
-    - [ ] Ativar/Desativar gateway.
-    - [ ] Alterar prioridade.
-- [ ] Implementar validações de dados nas entradas.
+- [X] Criar rotas de gerenciamento de Gateways:
+    - [X] Ativar/Desativar gateway.
+    - [X] Alterar prioridade.
+- [X] Implementar validações de dados nas entradas.
 
 ## 📍 Fase 3: O Core Multi-Gateway (Quinta/Sexta)
 
-- [ ] Criar interface padrão para os serviços de pagamento.
-- [ ] Implementar integração com Gateway 1 (Mock porta 3001 - Requer Login no mock).
-- [ ] Implementar integração com Gateway 2 (Mock porta 3002 - Headers fixos).
-- [ ] Criar classe orquestradora (Strategy/Factory) para gerenciar o fluxo:
-    - [ ] Buscar gateways ativos ordenados por prioridade.
-    - [ ] Tentar cobrar no primeiro.
-    - [ ] Fallback: Se falhar, tentar o próximo automaticamente.
+- [X] Criar interface padrão para os serviços de pagamento.
+- [X] Implementar integração com Gateway 1 (Mock porta 3001 - Requer Login no mock).
+- [X] Implementar integração com Gateway 2 (Mock porta 3002 - Headers fixos).
+- [X] Criar classe orquestradora (Strategy/Factory) para gerenciar o fluxo:
+    - [X] Buscar gateways ativos ordenados por prioridade.
+    - [X] Tentar cobrar no primeiro.
+    - [X] Fallback: Se falhar, tentar o próximo automaticamente.
 
 ## 📍 Fase 4: Regras de Negócio Nível 2 (Sexta)
 
+- [ ] Criar CRUD básico de Produtos (Listar/Criar).
 - [ ] Criar rota de Compra (`POST /transactions`):
     - [ ] Receber `product_id`, `quantity` e dados do cartão.
     - [ ] Calcular valor total no back-end (preço do banco \* quantidade).
