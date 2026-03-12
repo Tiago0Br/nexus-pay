@@ -1,0 +1,25 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: betalent-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nexus_pay
+      MYSQL_USER: betalent_user
+      MYSQL_PASSWORD: docker
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  gateways-mock:
+    image: matheusprotzen/gateways-mock
+    container_name: betalent-gateways
+    restart: always
+    ports:
+      - '3001:3001'
+      - '3002:3002'
+
+volumes:
+  mysql_data:
