@@ -40,11 +40,11 @@
 ## 📍 Fase 4: Regras de Negócio Nível 2 (Sexta)
 
 - [X] Criar CRUD básico de Produtos (Listar/Criar).
-- [ ] Criar rota de Compra (`POST /transactions`):
-    - [ ] Receber `product_id`, `quantity` e dados do cartão.
-    - [ ] Calcular valor total no back-end (preço do banco \* quantidade).
-    - [ ] Chamar orquestrador de gateways.
-    - [ ] Salvar transação no banco com status correto e gateway utilizado.
+- [X] Criar rota de Compra (`POST /transactions`):
+    - [X] Receber `product_id`, `quantity` e dados do cartão.
+    - [X] Calcular valor total no back-end (preço do banco \* quantidade).
+    - [X] Chamar orquestrador de gateways.
+    - [X] Salvar transação no banco com status correto e gateway utilizado.
 - [ ] Criar rota de Reembolso (`POST /transactions/:id/charge_back`).
 - [ ] Criar rotas de leitura adicionais:
     - [ ] Listar todos os clientes.
