@@ -19,9 +19,9 @@
 
 ## 📍 Fase 2: Autenticação e Domínio (Quarta/Quinta)
 
-- [ ] Instalar e configurar o Laravel Sanctum.
-- [ ] Criar rota e controller de Login (`POST /login`).
-- [ ] Proteger rotas privadas com middleware de autenticação.
+- [X] Instalar e configurar o Laravel Sanctum.
+- [X] Criar rota e controller de Login (`POST /login`).
+- [X] Proteger rotas privadas com middleware de autenticação.
 - [ ] Criar CRUD básico de Produtos (Listar/Criar).
 - [ ] Criar rotas de gerenciamento de Gateways:
     - [ ] Ativar/Desativar gateway.
