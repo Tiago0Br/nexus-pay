@@ -8,14 +8,14 @@
 - [x] Inicializar projeto Laravel.
 - [x] Criar `docker-compose.yml` (MySQL + Mocks).
 - [X] Configurar variáveis de ambiente (`.env`) para conexão com o banco.
-- [ ] Criar Migrations (Eloquent) para as tabelas:
-    - [ ] `users` (email, password, etc).
-    - [ ] `gateways` (name, is_active, priority).
-    - [ ] `clients` (name, email).
-    - [ ] `products` (name, amount em centavos).
-    - [ ] `transactions` (relacionamentos, status, valor, etc).
-- [ ] Criar Seeders para popular o banco com produtos e os dois gateways iniciais.
-- [ ] Limpar boilerplate (rotas genéricas, views).
+- [X] Criar Migrations (Eloquent) para as tabelas:
+    - [X] `users` (email, password, etc).
+    - [X] `gateways` (name, is_active, priority).
+    - [X] `clients` (name, email).
+    - [X] `products` (name, amount em centavos).
+    - [X] `transactions` (relacionamentos, status, valor, etc).
+- [X] Criar Seeders para popular o banco com produtos e os dois gateways iniciais.
+- [X] Limpar boilerplate (rotas genéricas, views).
 
 ## 📍 Fase 2: Autenticação e Domínio (Quarta/Quinta)
 
