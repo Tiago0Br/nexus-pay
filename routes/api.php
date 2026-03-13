@@ -23,8 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::apiResource('products', ProductController::class)
-        ->only(['index', 'store']);
+    Route::apiResource('products', ProductController::class);
 
     Route::apiResource('clients', ClientController::class)
         ->only(['index', 'show']);
