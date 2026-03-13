@@ -45,7 +45,7 @@
     - [X] Calcular valor total no back-end (preço do banco \* quantidade).
     - [X] Chamar orquestrador de gateways.
     - [X] Salvar transação no banco com status correto e gateway utilizado.
-- [ ] Criar rota de Reembolso (`POST /transactions/:id/charge_back`).
+- [X] Criar rota de Reembolso (`POST /transactions/:id/charge_back`).
 - [ ] Criar rotas de leitura adicionais:
     - [ ] Listar todos os clientes.
     - [ ] Listar detalhe do cliente e suas compras.
@@ -53,10 +53,10 @@
 
 ## 📍 Fase 5: Qualidade e Testes (Sábado)
 
-- [ ] Configurar ambiente de testes (Pest).
-- [ ] Escrever testes unitários/integração para o cálculo de valor da compra.
-- [ ] Escrever teste simulando sucesso no Gateway 1.
-- [ ] Escrever teste simulando falha no Gateway 1 (CVV inválido) e sucesso no Gateway 2.
+- [X] Configurar ambiente de testes (Pest).
+- [X] Escrever testes unitários/integração para o cálculo de valor da compra.
+- [X] Escrever teste simulando sucesso no Gateway 1.
+- [X] Escrever teste simulando falha no Gateway 1 (CVV inválido) e sucesso no Gateway 2.
 - [ ] Refinar respostas de erro da API (padronizar JSON de erro).
 
 ## 📍 Fase 6: Entrega (Domingo)
