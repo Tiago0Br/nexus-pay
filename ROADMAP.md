@@ -50,8 +50,8 @@
     - [X] Listar todos os clientes.
     - [X] Listar detalhe do cliente e suas compras.
     - [X] Listar todas as compras gerais.
-- [ ] Criar CRUD de usuários
-- [ ] Criar rotas para gerenciamento dos Gateways
+- [X] Criar CRUD de usuários
+- [X] Criar rotas para gerenciamento dos Gateways
 
 ## 📍 Fase 5: Qualidade e Testes (Sábado)
 
