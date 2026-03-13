@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionProduct;
 use App\Services\PaymentOrchestrator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -20,7 +21,7 @@ class TransactionController extends Controller
         $this->orchestrator = $orchestrator;
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'client_name' => ['required', 'string', 'max:255'],
@@ -83,6 +84,33 @@ class TransactionController extends Controller
                 'message' => 'Pagamento recusado em todos os gateways disponíveis.',
                 'error' => $e->getMessage()
             ], status: 402);
+        }
+    }
+
+    public function chargeBack(Transaction $transaction): JsonResponse
+    {
+        if ($transaction->status === 'CHARGED_BACK') {
+            return response()->json(data: [
+                'message' => 'Esta transação já foi reembolsada anteriormente.'
+            ], status: 400);
+        }
+
+        try {
+            $this->orchestrator->refundPayment($transaction);
+
+            $transaction->update(['status' => 'CHARGED_BACK']);
+
+            return response()->json([
+                'message' => 'Reembolso realizado com sucesso!',
+                'transaction_id' => $transaction->id,
+                'status' => 'CHARGED_BACK'
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json(data: [
+                'message' => 'Falha ao processar o reembolso.',
+                'error' => $e->getMessage()
+            ], status: 422);
         }
     }
 }

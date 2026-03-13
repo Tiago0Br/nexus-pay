@@ -23,5 +23,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('products', ProductController::class)
         ->only(['index', 'store']);
 
-    Route::post('/transactions', [TransactionController::class, 'store']);
+    Route::group(['prefix' => '/transactions'], function () {
+        Route::post('/', [TransactionController::class, 'store']);
+        Route::patch('/{transaction}/charge_back', [TransactionController::class, 'chargeBack']);
+    });
 });
