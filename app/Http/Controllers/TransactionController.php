@@ -21,6 +21,18 @@ class TransactionController extends Controller
         $this->orchestrator = $orchestrator;
     }
 
+    public function index(): JsonResponse
+    {
+        return response()
+            ->json(Transaction::with(['client', 'products'])->get());
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        return response()
+            ->json(Transaction::with(['client', 'products'])->findOrFail($id));
+    }
+
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([

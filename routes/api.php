@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
@@ -23,7 +24,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('products', ProductController::class)
         ->only(['index', 'store']);
 
+    Route::apiResource('clients', ClientController::class)
+        ->only(['index', 'show']);
+
     Route::group(['prefix' => '/transactions'], function () {
+        Route::get('/', [TransactionController::class, 'index']);
+        Route::get('/{id}', [TransactionController::class, 'show']);
         Route::post('/', [TransactionController::class, 'store']);
         Route::patch('/{transaction}/charge_back', [TransactionController::class, 'chargeBack']);
     });

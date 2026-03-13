@@ -39,17 +39,19 @@
 
 ## 📍 Fase 4: Regras de Negócio Nível 2 (Sexta)
 
-- [X] Criar CRUD básico de Produtos (Listar/Criar).
+- [X] Criar CRUD básico de Produtos.
 - [X] Criar rota de Compra (`POST /transactions`):
     - [X] Receber `product_id`, `quantity` e dados do cartão.
     - [X] Calcular valor total no back-end (preço do banco \* quantidade).
     - [X] Chamar orquestrador de gateways.
     - [X] Salvar transação no banco com status correto e gateway utilizado.
 - [X] Criar rota de Reembolso (`POST /transactions/:id/charge_back`).
-- [ ] Criar rotas de leitura adicionais:
-    - [ ] Listar todos os clientes.
-    - [ ] Listar detalhe do cliente e suas compras.
-    - [ ] Listar todas as compras gerais.
+- [X] Criar rotas de leitura adicionais:
+    - [X] Listar todos os clientes.
+    - [X] Listar detalhe do cliente e suas compras.
+    - [X] Listar todas as compras gerais.
+- [ ] Criar CRUD de usuários
+- [ ] Criar rotas para gerenciamento dos Gateways
 
 ## 📍 Fase 5: Qualidade e Testes (Sábado)
 
@@ -61,10 +63,10 @@
 
 ## 📍 Fase 6: Entrega (Domingo)
 
-- [ ] Revisar código (Clean Architecture, responsabilidades separadas).
 - [ ] Escrever `README.md` detalhado:
     - [ ] Passo a passo de instalação.
     - [ ] Como rodar o Docker.
     - [ ] Explicação da arquitetura Multi-Gateway.
+- [ ] Revisar código (Clean Architecture, responsabilidades separadas).
 - [ ] Realizar commit final.
 - [ ] Enviar repositório do Github!
