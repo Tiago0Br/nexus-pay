@@ -24,7 +24,7 @@ class TransactionController extends Controller
     public function index(): JsonResponse
     {
         return response()
-            ->json(Transaction::with(['client', 'products'])->get());
+            ->json(Transaction::all());
     }
 
     public function show(int $id): JsonResponse
