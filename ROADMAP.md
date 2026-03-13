@@ -57,7 +57,7 @@
 - [X] Escrever testes unitários/integração para o cálculo de valor da compra.
 - [X] Escrever teste simulando sucesso no Gateway 1.
 - [X] Escrever teste simulando falha no Gateway 1 (CVV inválido) e sucesso no Gateway 2.
-- [ ] Refinar respostas de erro da API (padronizar JSON de erro).
+- [X] Refinar respostas de erro da API (padronizar JSON de erro).
 
 ## 📍 Fase 6: Entrega (Domingo)
 
