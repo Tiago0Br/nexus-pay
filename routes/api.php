@@ -17,6 +17,7 @@ Route::get('/', function () {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/transactions', [TransactionController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', function (Request $request) {
@@ -33,7 +34,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/transactions'], function () {
         Route::get('/', [TransactionController::class, 'index']);
         Route::get('/{id}', [TransactionController::class, 'show']);
-        Route::post('/', [TransactionController::class, 'store']);
         Route::patch('/{transaction}/charge_back', [TransactionController::class, 'chargeBack']);
     });
 
