@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTransactionRequest;
 use App\Models\Client;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionProduct;
 use App\Services\PaymentOrchestrator;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
@@ -33,16 +33,9 @@ class TransactionController extends Controller
             ->json(Transaction::with(['client', 'products'])->findOrFail($id));
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(CreateTransactionRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'client_name' => ['required', 'string', 'max:255'],
-            'client_email' => ['required', 'email'],
-            'product_id' => ['required', 'integer', 'exists:products,id'],
-            'quantity' => ['required', 'integer', 'min:1'],
-            'cardNumber' => ['required', 'string', 'size:16'],
-            'cvv' => ['required', 'string', 'min:3', 'max:4'],
-        ]);
+        $validated = $request->validated();
 
         $product = Product::query()->findOrFail($validated['product_id']);
         $totalAmount = $product->amount * $validated['quantity'];

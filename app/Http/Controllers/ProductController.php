@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveProductRequest;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -13,12 +13,9 @@ class ProductController extends Controller
         return response()->json(Product::all());
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(SaveProductRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'amount' => ['required', 'numeric', 'min:1'],
-        ]);
+        $validated = $request->validated();
 
         $product = Product::query()->create($validated);
 
@@ -33,12 +30,9 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function update(Request $request, Product $product): JsonResponse
+    public function update(SaveProductRequest $request, Product $product): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'amount' => ['required', 'numeric', 'min:1'],
-        ]);
+        $validated = $request->validated();
 
         $product->update($validated);
 

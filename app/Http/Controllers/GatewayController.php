@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateGatewayPriorityRequest;
 use App\Models\Gateway;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class GatewayController extends Controller
 {
@@ -26,12 +26,8 @@ class GatewayController extends Controller
         ]);
     }
 
-    public function updatePriority(Request $request, Gateway $gateway): JsonResponse
+    public function updatePriority(UpdateGatewayPriorityRequest $request, Gateway $gateway): JsonResponse
     {
-        $request->validate([
-            'priority' => ['required', 'integer', 'min:1']
-        ]);
-
         $gateway->priority = $request->priority;
         $gateway->save();
 
