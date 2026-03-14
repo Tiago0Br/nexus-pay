@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
                 'priority' => 2,
                 'created_at' => $now,
                 'updated_at' => $now,
-            ]
+            ],
         ]);
 
         DB::table('products')->insert([

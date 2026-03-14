@@ -25,14 +25,14 @@ return Application::configure(basePath: dirname(__DIR__))
                 'status' => 'error',
                 'code' => ErrorCode::INTERNAL_ERROR->value,
                 'message' => 'Não autorizado. Token ausente ou inválido.',
-                'details' => []
+                'details' => [],
             ], status: 401);
         });
 
         $exceptions->render(function (ValidationException $e) {
             return response()->json(data: [
                 'status' => 'ERROR',
-                "code" => ErrorCode::VALIDATION_FAILED->value,
+                'code' => ErrorCode::VALIDATION_FAILED->value,
                 'message' => 'Os dados fornecidos são inválidos.',
                 'details' => $e->errors(),
             ], status: 400);
@@ -41,19 +41,20 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (NotFoundHttpException $e) {
             return response()->json(data: [
                 'status' => 'ERROR',
-                "code" => ErrorCode::NOT_FOUND->value,
+                'code' => ErrorCode::NOT_FOUND->value,
                 'message' => 'O recurso solicitado não foi encontrado.',
-                'details' => []
+                'details' => [],
             ], status: 404);
         });
 
         $exceptions->render(function (Throwable $e) {
             $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+
             return response()->json(data: [
                 'status' => 'ERROR',
-                "code" => ErrorCode::INTERNAL_ERROR->value,
+                'code' => ErrorCode::INTERNAL_ERROR->value,
                 'message' => $e->getMessage(),
-                'details' => []
+                'details' => [],
             ], status: $statusCode);
         });
     })->create();

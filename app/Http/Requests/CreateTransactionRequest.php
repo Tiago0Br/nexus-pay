@@ -19,7 +19,7 @@ class CreateTransactionRequest extends FormRequest
             'product_id' => ['required', 'integer', 'exists:products,id'],
             'quantity' => ['required', 'integer', 'min:1'],
             'cardNumber' => ['required', 'string', 'size:16'],
-            'cvv' => ['required', 'string', 'min:3', 'max:4']
+            'cvv' => ['required', 'string', 'min:3', 'max:4'],
         ];
     }
 }

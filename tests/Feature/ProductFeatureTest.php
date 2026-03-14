@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
@@ -13,7 +13,7 @@ describe('Teste das rotas de produtos', function () {
             'name' => 'John Doe',
             'email' => 'admin@betalent.tech',
             'password' => bcrypt('password123'),
-            'role' => 'ADMIN'
+            'role' => 'ADMIN',
         ]);
 
         Sanctum::actingAs($this->user);
@@ -36,7 +36,7 @@ describe('Teste das rotas de produtos', function () {
     it('deve cadastrar um novo produto com sucesso', function () {
         $response = $this->postJson('/products', [
             'name' => 'Cadeira Ergonomica',
-            'amount' => 85000
+            'amount' => 85000,
         ]);
 
         $response->assertStatus(201)
@@ -44,13 +44,13 @@ describe('Teste das rotas de produtos', function () {
 
         $this->assertDatabaseHas('products', [
             'name' => 'Cadeira Ergonomica',
-            'amount' => 85000
+            'amount' => 85000,
         ]);
     });
 
     it('deve barrar o cadastro de um produto com dados inválidos (sem valor)', function () {
         $response = $this->postJson('/products', [
-            'name' => 'Produto sem preco'
+            'name' => 'Produto sem preco',
         ]);
 
         $response->assertStatus(400)
@@ -58,7 +58,7 @@ describe('Teste das rotas de produtos', function () {
             ->assertJsonFragment(['details' => ['amount' => ['O campo amount é obrigatório.']]]);
 
         $this->assertDatabaseMissing('products', [
-            'name' => 'Produto sem preco'
+            'name' => 'Produto sem preco',
         ]);
     });
 });

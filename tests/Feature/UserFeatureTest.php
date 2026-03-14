@@ -12,7 +12,7 @@ describe('Testes das rotas de usuários', function () {
             'name' => 'John Doe',
             'email' => 'admin_users@betalent.tech',
             'password' => bcrypt('password123'),
-            'role' => 'ADMIN'
+            'role' => 'ADMIN',
         ]);
         Sanctum::actingAs($this->admin);
     });
@@ -22,7 +22,7 @@ describe('Testes das rotas de usuários', function () {
             'name' => 'John Doe',
             'email' => 'novo@betalent.tech',
             'password' => 'secret123',
-            'role' => 'MANAGER'
+            'role' => 'MANAGER',
         ]);
 
         $response->assertStatus(201)
@@ -36,14 +36,14 @@ describe('Testes das rotas de usuários', function () {
             'name' => 'John Doe',
             'email' => 'duplicado@betalent.tech',
             'password' => 'secret123',
-            'role' => 'MANAGER'
+            'role' => 'MANAGER',
         ]);
 
         $response = $this->postJson('/users', [
             'name' => 'John Doe 2',
             'email' => 'duplicado@betalent.tech',
             'password' => 'outrasenha',
-            'role' => 'USER'
+            'role' => 'USER',
         ]);
 
         $response->assertStatus(400)
@@ -56,7 +56,7 @@ describe('Testes das rotas de usuários', function () {
             'name' => 'John Doe',
             'email' => 'delete_me@betalent.tech',
             'password' => bcrypt('123'),
-            'role' => 'USER'
+            'role' => 'USER',
         ]);
 
         $response = $this->deleteJson("/users/$userToDelete->id");

@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use App\Models\Gateway;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
@@ -13,14 +13,14 @@ describe('Testes das rotas de Gateways', function () {
             'name' => 'John Doe',
             'email' => 'admin_gateways@betalent.tech',
             'password' => bcrypt('password123'),
-            'role' => 'ADMIN'
+            'role' => 'ADMIN',
         ]);
         Sanctum::actingAs($this->user);
 
         $this->gateway = Gateway::query()->create([
             'name' => 'Gateway Master',
             'is_active' => true,
-            'priority' => 2
+            'priority' => 2,
         ]);
     });
 
@@ -43,13 +43,13 @@ describe('Testes das rotas de Gateways', function () {
 
         $this->assertDatabaseHas('gateways', [
             'id' => $this->gateway->id,
-            'is_active' => false
+            'is_active' => false,
         ]);
     });
 
     it('deve alterar a prioridade de um gateway', function () {
         $response = $this->patchJson("/gateways/{$this->gateway->id}/priority", [
-            'priority' => 5
+            'priority' => 5,
         ]);
 
         $response->assertStatus(200)

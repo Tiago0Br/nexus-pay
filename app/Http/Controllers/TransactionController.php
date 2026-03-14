@@ -8,9 +8,9 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionProduct;
 use App\Services\PaymentOrchestrator;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use Exception;
 
 class TransactionController extends Controller
 {
@@ -50,7 +50,7 @@ class TransactionController extends Controller
             'client_name' => $client->name,
             'client_email' => $client->email,
             'card_number' => $validated['cardNumber'],
-            'cvv' => $validated['cvv']
+            'cvv' => $validated['cvv'],
         ];
 
         DB::beginTransaction();
@@ -64,13 +64,13 @@ class TransactionController extends Controller
                 'external_id' => $paymentResult['external_id'],
                 'status' => 'SUCCESS',
                 'amount' => $totalAmount,
-                'card_last_numbers' => substr(string: $validated['cardNumber'], offset: -4)
+                'card_last_numbers' => substr(string: $validated['cardNumber'], offset: -4),
             ]);
 
             TransactionProduct::query()->create([
                 'transaction_id' => $transaction->id,
                 'product_id' => $product->id,
-                'quantity' => $validated['quantity']
+                'quantity' => $validated['quantity'],
             ]);
 
             DB::commit();
@@ -79,7 +79,7 @@ class TransactionController extends Controller
                 'message' => 'Pagamento aprovado com sucesso!',
                 'transaction_id' => $transaction->id,
                 'gateway_used' => $paymentResult['gateway_id'],
-                'status' => 'SUCCESS'
+                'status' => 'SUCCESS',
             ], 201);
 
         } catch (Exception $e) {
@@ -87,7 +87,7 @@ class TransactionController extends Controller
 
             return response()->json(data: [
                 'message' => 'Pagamento recusado em todos os gateways disponíveis.',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], status: 402);
         }
     }
@@ -96,7 +96,7 @@ class TransactionController extends Controller
     {
         if ($transaction->status === 'CHARGED_BACK') {
             return response()->json(data: [
-                'message' => 'Esta transação já foi reembolsada anteriormente.'
+                'message' => 'Esta transação já foi reembolsada anteriormente.',
             ], status: 400);
         }
 
@@ -108,13 +108,13 @@ class TransactionController extends Controller
             return response()->json([
                 'message' => 'Reembolso realizado com sucesso!',
                 'transaction_id' => $transaction->id,
-                'status' => 'CHARGED_BACK'
+                'status' => 'CHARGED_BACK',
             ]);
 
         } catch (Exception $e) {
             return response()->json(data: [
                 'message' => 'Falha ao processar o reembolso.',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], status: 422);
         }
     }

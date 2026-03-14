@@ -1,10 +1,10 @@
 <?php
 
 use App\Models\Client;
+use App\Models\Gateway;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Models\Product;
-use App\Models\Gateway;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Laravel\Sanctum\Sanctum;
@@ -17,14 +17,14 @@ describe('Testes das rotas de transações', function () {
             'name' => 'John Doe',
             'email' => 'test@betalent.tech',
             'password' => bcrypt('password123'),
-            'role' => 'ADMIN'
+            'role' => 'ADMIN',
         ]);
 
         Sanctum::actingAs($this->user);
 
         $this->product = Product::query()->create([
             'name' => 'Teclado Mecânico',
-            'amount' => 45000
+            'amount' => 45000,
         ]);
 
         $this->gateway1 = Gateway::query()->create(['name' => 'Gateway 1', 'priority' => 1, 'is_active' => true]);
@@ -43,7 +43,7 @@ describe('Testes das rotas de transações', function () {
             'product_id' => $this->product->id,
             'quantity' => 1,
             'cardNumber' => '5569000000006063',
-            'cvv' => '010'
+            'cvv' => '010',
         ]);
 
         $response->assertStatus(201)
@@ -52,7 +52,7 @@ describe('Testes das rotas de transações', function () {
         $this->assertDatabaseHas(table: 'transactions', data: [
             'amount' => 45000,
             'status' => 'SUCCESS',
-            'external_id' => 'ext_gateway_1_id'
+            'external_id' => 'ext_gateway_1_id',
         ]);
     });
 
@@ -69,7 +69,7 @@ describe('Testes das rotas de transações', function () {
             'product_id' => $this->product->id,
             'quantity' => 1,
             'cardNumber' => '5569000000006063',
-            'cvv' => '100'
+            'cvv' => '100',
         ]);
 
         $response->assertStatus(201)
@@ -79,7 +79,7 @@ describe('Testes das rotas de transações', function () {
             'amount' => 45000,
             'status' => 'SUCCESS',
             'external_id' => 'ext_gateway_2_id',
-            'gateway_id' => $this->gateway2->id
+            'gateway_id' => $this->gateway2->id,
         ]);
     });
 
@@ -96,7 +96,7 @@ describe('Testes das rotas de transações', function () {
             'product_id' => $this->product->id,
             'quantity' => 1,
             'cardNumber' => '5569000000006063',
-            'cvv' => '999'
+            'cvv' => '999',
         ]);
 
         $response->assertStatus(402)
@@ -110,7 +110,7 @@ describe('Testes das rotas de transações', function () {
     it('deve realizar o reembolso de uma transação com sucesso', function () {
         $client = Client::query()->create([
             'name' => 'Cliente Reembolso',
-            'email' => 'reembolso@email.com'
+            'email' => 'reembolso@email.com',
         ]);
 
         $transaction = Transaction::query()->create([
@@ -119,7 +119,7 @@ describe('Testes das rotas de transações', function () {
             'external_id' => 'ext_123_abc',
             'status' => 'SUCCESS',
             'amount' => 45000,
-            'card_last_numbers' => '6063'
+            'card_last_numbers' => '6063',
         ]);
 
         Http::fake([
@@ -134,14 +134,14 @@ describe('Testes das rotas de transações', function () {
 
         $this->assertDatabaseHas('transactions', [
             'id' => $transaction->id,
-            'status' => 'CHARGED_BACK'
+            'status' => 'CHARGED_BACK',
         ]);
     });
 
     it('deve bloquear o reembolso de uma transação já estornada', function () {
         $client = Client::query()->create([
             'name' => 'Cliente Espertinho',
-            'email' => 'espertinho@email.com'
+            'email' => 'espertinho@email.com',
         ]);
 
         $transaction = Transaction::query()->create([
@@ -150,7 +150,7 @@ describe('Testes das rotas de transações', function () {
             'external_id' => 'ext_999_xyz',
             'status' => 'CHARGED_BACK',
             'amount' => 45000,
-            'card_last_numbers' => '6063'
+            'card_last_numbers' => '6063',
         ]);
 
         $response = $this->patchJson("/transactions/$transaction->id/charge_back");
@@ -166,7 +166,7 @@ describe('Testes das rotas de transações', function () {
             'client_id' => $client->id,
             'status' => 'SUCCESS',
             'amount' => 5000,
-            'card_last_numbers' => '9999'
+            'card_last_numbers' => '9999',
         ]);
 
         $response = $this->getJson('/transactions');
@@ -174,7 +174,7 @@ describe('Testes das rotas de transações', function () {
         $response->assertStatus(200)
             ->assertJsonFragment(['status' => 'SUCCESS'])
             ->assertJsonStructure([
-                '*' => ['id', 'amount', 'client_id', 'gateway_id']
+                '*' => ['id', 'amount', 'client_id', 'gateway_id'],
             ]);
     });
 
@@ -185,7 +185,7 @@ describe('Testes das rotas de transações', function () {
             'client_id' => $client->id,
             'status' => 'SUCCESS',
             'amount' => 7500,
-            'card_last_numbers' => '0000'
+            'card_last_numbers' => '0000',
         ]);
 
         $response = $this->getJson("/transactions/$transaction->id");

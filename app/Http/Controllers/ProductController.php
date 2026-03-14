@@ -21,7 +21,7 @@ class ProductController extends Controller
 
         return response()->json(data: [
             'message' => 'Produto criado com sucesso',
-            'product' => $product
+            'product' => $product,
         ], status: 201);
     }
 
@@ -38,7 +38,7 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'Produto atualizado com sucesso',
-            'product' => $product
+            'product' => $product,
         ]);
     }
 

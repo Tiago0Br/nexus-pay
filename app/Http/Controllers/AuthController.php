@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -12,9 +12,9 @@ class AuthController extends Controller
     {
         $user = User::query()->where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'As credenciais fornecidas estão incorretas.'
+                'message' => 'As credenciais fornecidas estão incorretas.',
             ], 401);
         }
 
@@ -28,7 +28,7 @@ class AuthController extends Controller
                 'id' => $user->id,
                 'email' => $user->email,
                 'role' => $user->role,
-            ]
+            ],
         ]);
     }
 }

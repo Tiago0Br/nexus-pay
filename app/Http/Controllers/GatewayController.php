@@ -15,14 +15,14 @@ class GatewayController extends Controller
 
     public function toggleActive(Gateway $gateway): JsonResponse
     {
-        $gateway->is_active = !$gateway->is_active;
+        $gateway->is_active = ! $gateway->is_active;
         $gateway->save();
 
         $status = $gateway->is_active ? 'ativado' : 'desativado';
 
         return response()->json([
             'message' => "Gateway $status com sucesso.",
-            'gateway' => $gateway
+            'gateway' => $gateway,
         ]);
     }
 
@@ -33,7 +33,7 @@ class GatewayController extends Controller
 
         return response()->json([
             'message' => 'Prioridade atualizada com sucesso.',
-            'gateway' => $gateway
+            'gateway' => $gateway,
         ]);
     }
 }

@@ -14,7 +14,7 @@ class UpdateGatewayPriorityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'priority' => ['required', 'integer', 'min:1']
+            'priority' => ['required', 'integer', 'min:1'],
         ];
     }
 }

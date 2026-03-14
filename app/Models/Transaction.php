@@ -14,7 +14,7 @@ class Transaction extends Model
         'external_id',
         'status',
         'amount',
-        'card_last_numbers'
+        'card_last_numbers',
     ];
 
     public function products(): BelongsToMany

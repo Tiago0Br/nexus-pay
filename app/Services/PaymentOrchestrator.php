@@ -31,10 +31,11 @@ class PaymentOrchestrator
                     'status' => 'SUCCESS',
                     'gateway_id' => $gatewayModel->id,
                     'external_id' => $response['external_id'] ?? null,
-                    'response' => $response
+                    'response' => $response,
                 ];
             } catch (Exception $e) {
-                Log::warning("Falha no $gatewayModel->name: " . $e->getMessage());
+                Log::warning("Falha no $gatewayModel->name: ".$e->getMessage());
+
                 continue;
             }
         }
@@ -46,8 +47,8 @@ class PaymentOrchestrator
     {
         $gatewayModel = Gateway::query()->find($transaction->gateway_id);
 
-        if (!$gatewayModel) {
-            throw new Exception("Gateway da transação não encontrado.");
+        if (! $gatewayModel) {
+            throw new Exception('Gateway da transação não encontrado.');
         }
 
         $gatewayService = $this->resolveGatewayService($gatewayModel->name);

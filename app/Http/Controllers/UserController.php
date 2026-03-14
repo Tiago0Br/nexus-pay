@@ -26,7 +26,7 @@ class UserController extends Controller
         return response()
             ->json(data: [
                 'message' => 'Usuário criado',
-                'user' => $user
+                'user' => $user,
             ], status: 201);
     }
 
@@ -48,7 +48,7 @@ class UserController extends Controller
         return response()
             ->json(data: [
                 'message' => 'Usuário atualizado',
-                'user' => $user
+                'user' => $user,
             ], status: 201);
     }
 

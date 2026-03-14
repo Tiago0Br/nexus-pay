@@ -9,7 +9,7 @@ class Client extends Model
 {
     protected $fillable = [
         'name',
-        'email'
+        'email',
     ];
 
     public function transactions(): HasMany
