@@ -7,7 +7,7 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-describe('Testes das rotas de Gateways', function () {
+describe('GatewayFeature', function () {
     beforeEach(function () {
         $this->user = User::query()->create([
             'name' => 'John Doe',
@@ -24,7 +24,7 @@ describe('Testes das rotas de Gateways', function () {
         ]);
     });
 
-    it('deve listar os gateways ordenados por prioridade', function () {
+    it('should list gateways ordered by priority', function () {
         Gateway::query()->create(['name' => 'Gateway Top', 'is_active' => true, 'priority' => 1]);
 
         $response = $this->getJson('/gateways');
@@ -35,7 +35,7 @@ describe('Testes das rotas de Gateways', function () {
         expect($response->json()[0]['name'])->toBe('Gateway Top');
     });
 
-    it('deve ativar/desativar um gateway', function () {
+    it('should toggle a gateway active status', function () {
         $response = $this->patchJson("/gateways/{$this->gateway->id}/toggle-active");
 
         $response->assertStatus(200)
@@ -47,7 +47,7 @@ describe('Testes das rotas de Gateways', function () {
         ]);
     });
 
-    it('deve alterar a prioridade de um gateway', function () {
+    it('should update a gateway priority', function () {
         $response = $this->patchJson("/gateways/{$this->gateway->id}/priority", [
             'priority' => 5,
         ]);

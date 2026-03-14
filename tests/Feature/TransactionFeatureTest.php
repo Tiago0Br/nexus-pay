@@ -11,7 +11,7 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-describe('Testes das rotas de transações', function () {
+describe('TransactionFeature', function () {
     beforeEach(function () {
         $this->user = User::query()->create([
             'name' => 'John Doe',
@@ -31,7 +31,7 @@ describe('Testes das rotas de transações', function () {
         $this->gateway2 = Gateway::query()->create(['name' => 'Gateway 2', 'priority' => 2, 'is_active' => true]);
     });
 
-    it('deve processar a compra com sucesso no Gateway 1', function () {
+    it('should process purchase successfully on Gateway 1', function () {
         Http::fake([
             '*localhost:3001/login*' => Http::response(['token' => 'fake_token_g1']),
             '*localhost:3001/transactions*' => Http::response(['id' => 'ext_gateway_1_id']),
@@ -56,7 +56,7 @@ describe('Testes das rotas de transações', function () {
         ]);
     });
 
-    it('deve falhar no Gateway 1 e processar a compra com sucesso no Gateway 2 (Fallback)', function () {
+    it('should fail on Gateway 1 and process purchase successfully on Gateway 2 (Fallback)', function () {
         Http::fake([
             '*localhost:3001/login*' => Http::response(['token' => 'fake_token_g1']),
             '*localhost:3001/transactions*' => Http::response(body: ['error' => 'Cartão recusado'], status: 400),
@@ -83,7 +83,7 @@ describe('Testes das rotas de transações', function () {
         ]);
     });
 
-    it('deve retornar erro e fazer rollback se todos os gateways falharem', function () {
+    it('should return error and rollback if all gateways fail', function () {
         Http::fake([
             '*localhost:3001/login*' => Http::response(['token' => 'fake_token_g1']),
             '*localhost:3001/transactions*' => Http::response(body: ['error' => 'Erro G1'], status: 400),
@@ -107,7 +107,7 @@ describe('Testes das rotas de transações', function () {
         ]);
     });
 
-    it('deve realizar o reembolso de uma transação com sucesso', function () {
+    it('should process a transaction refund successfully', function () {
         $client = Client::query()->create([
             'name' => 'Cliente Reembolso',
             'email' => 'reembolso@email.com',
@@ -138,7 +138,7 @@ describe('Testes das rotas de transações', function () {
         ]);
     });
 
-    it('deve bloquear o reembolso de uma transação já estornada', function () {
+    it('should block refund of an already refunded transaction', function () {
         $client = Client::query()->create([
             'name' => 'Cliente Espertinho',
             'email' => 'espertinho@email.com',
@@ -159,7 +159,7 @@ describe('Testes das rotas de transações', function () {
             ->assertJsonFragment(['message' => 'Esta transação já foi reembolsada anteriormente.']);
     });
 
-    it('deve listar todas as transacoes com os relacionamentos de cliente e produtos', function () {
+    it('should list all transactions with client and product relationships', function () {
         $client = Client::query()->create(['name' => 'Comprador', 'email' => 'compra@email.com']);
 
         Transaction::query()->create([
@@ -178,7 +178,7 @@ describe('Testes das rotas de transações', function () {
             ]);
     });
 
-    it('deve listar detalhes de uma transacao especifica', function () {
+    it('should list details of a specific transaction', function () {
         $client = Client::query()->create(['name' => 'Comprador Unico', 'email' => 'unico@email.com']);
 
         $transaction = Transaction::query()->create([

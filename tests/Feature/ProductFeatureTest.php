@@ -7,7 +7,7 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-describe('Teste das rotas de produtos', function () {
+describe('ProductFeature', function () {
     beforeEach(function () {
         $this->user = User::query()->create([
             'name' => 'John Doe',
@@ -19,7 +19,7 @@ describe('Teste das rotas de produtos', function () {
         Sanctum::actingAs($this->user);
     });
 
-    it('deve listar todos os produtos cadastrados', function () {
+    it('should list all registered products', function () {
         Product::query()->create(['name' => 'Monitor 27', 'amount' => 150000]);
         Product::query()->create(['name' => 'Mouse Gamer', 'amount' => 25000]);
 
@@ -33,7 +33,7 @@ describe('Teste das rotas de produtos', function () {
         $this->assertEquals(expected: 'Mouse Gamer', actual: $productsArray[1]['name']);
     });
 
-    it('deve cadastrar um novo produto com sucesso', function () {
+    it('should register a new product successfully', function () {
         $response = $this->postJson('/products', [
             'name' => 'Cadeira Ergonomica',
             'amount' => 85000,
@@ -48,7 +48,7 @@ describe('Teste das rotas de produtos', function () {
         ]);
     });
 
-    it('deve barrar o cadastro de um produto com dados inválidos (sem valor)', function () {
+    it('should reject product registration with invalid data (missing amount)', function () {
         $response = $this->postJson('/products', [
             'name' => 'Produto sem preco',
         ]);

@@ -8,7 +8,7 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-describe('Testes das rotas de Clientes', function () {
+describe('ClientFeature', function () {
     beforeEach(function () {
         Sanctum::actingAs(User::query()->create([
             'name' => 'John Doe',
@@ -27,14 +27,14 @@ describe('Testes das rotas de Clientes', function () {
         ]);
     });
 
-    it('deve listar clientes', function () {
+    it('should list clients', function () {
         $response = $this->getJson('/clients');
 
         $response->assertStatus(200)
             ->assertJsonFragment(['name' => 'Cliente VIP']);
     });
 
-    it('deve exibir detalhes do cliente e seu histórico de compras', function () {
+    it('should display client details and purchase history', function () {
         $response = $this->getJson("/clients/{$this->client->id}");
 
         $response->assertStatus(200)

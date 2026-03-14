@@ -6,7 +6,7 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-describe('Testes das rotas de usuários', function () {
+describe('UserFeature', function () {
     beforeEach(function () {
         $this->admin = User::query()->create([
             'name' => 'John Doe',
@@ -17,7 +17,7 @@ describe('Testes das rotas de usuários', function () {
         Sanctum::actingAs($this->admin);
     });
 
-    it('deve cadastrar um novo usuário', function () {
+    it('should register a new user', function () {
         $response = $this->postJson('/users', [
             'name' => 'John Doe',
             'email' => 'novo@betalent.tech',
@@ -31,7 +31,7 @@ describe('Testes das rotas de usuários', function () {
         $this->assertDatabaseHas('users', ['email' => 'novo@betalent.tech']);
     });
 
-    it('nao deve cadastrar usuario com email duplicado', function () {
+    it('should not register a user with a duplicate email', function () {
         $this->postJson('/users', [
             'name' => 'John Doe',
             'email' => 'duplicado@betalent.tech',
@@ -51,7 +51,7 @@ describe('Testes das rotas de usuários', function () {
             ->assertJsonFragment(['details' => ['email' => ['O campo email já está sendo utilizado.']]]);
     });
 
-    it('deve deletar um usuário', function () {
+    it('should delete a user', function () {
         $userToDelete = User::query()->create([
             'name' => 'John Doe',
             'email' => 'delete_me@betalent.tech',
