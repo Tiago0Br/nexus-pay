@@ -5,7 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property int $id
+ * @property int $client_id
+ * @property int|null $gateway_id
+ * @property string|null $external_id
+ * @property string $status
+ * @property int $amount
+ * @property string $card_last_numbers
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ */
 class Transaction extends Model
 {
     protected $fillable = [
