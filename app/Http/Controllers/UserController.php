@@ -17,6 +17,7 @@ class UserController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
+            'name' => ['required', 'string', 'min:2'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'min:6'],
             'role' => ['required', 'string']
@@ -41,9 +42,10 @@ class UserController extends Controller
     public function update(Request $request, User $user): JsonResponse
     {
         $validated = $request->validate([
-            'email' => ['sometimes', 'email', "unique:users,email,$user->id"],
-            'password' => ['sometimes', 'min:6'],
-            'role' => ['sometimes', 'string']
+            'name' => ['required', 'string', 'min:2'],
+            'email' => ['required', 'email', "unique:users,email,$user->id"],
+            'password' => ['required', 'min:6'],
+            'role' => ['required', 'string']
         ]);
 
         if (isset($validated['password'])) {

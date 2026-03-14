@@ -27,10 +27,10 @@ describe('Teste das rotas de produtos', function () {
 
         $response->assertStatus(200);
 
-        $data = $response->json();
-        $this->assertCount(expectedCount: 2, haystack: $data['products']);
-        $this->assertEquals(expected: 'Monitor 27', actual: $data['products'][0]['name']);
-        $this->assertEquals(expected: 'Mouse Gamer', actual: $data['products'][1]['name']);
+        $productsArray = $response->json();
+        $this->assertCount(expectedCount: 2, haystack: $productsArray);
+        $this->assertEquals(expected: 'Monitor 27', actual: $productsArray[0]['name']);
+        $this->assertEquals(expected: 'Mouse Gamer', actual: $productsArray[1]['name']);
     });
 
     it('deve cadastrar um novo produto com sucesso', function () {
@@ -53,8 +53,9 @@ describe('Teste das rotas de produtos', function () {
             'name' => 'Produto sem preco'
         ]);
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors(['amount']);
+        $response->assertStatus(400)
+            ->assertJsonFragment(['message' => 'Os dados fornecidos são inválidos.'])
+            ->assertJsonFragment(['details' => ['amount' => ['O campo amount é obrigatório.']]]);
 
         $this->assertDatabaseMissing('products', [
             'name' => 'Produto sem preco'

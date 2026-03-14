@@ -1,0 +1,44 @@
+<?php
+
+use App\Models\User;
+use App\Models\Client;
+use App\Models\Transaction;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
+
+uses(RefreshDatabase::class);
+
+describe('Testes das rotas de Clientes', function () {
+    beforeEach(function () {
+        Sanctum::actingAs(User::query()->create([
+            'name' => 'John Doe',
+            'email' => 'admin_clients@betalent.tech',
+            'password' => bcrypt('password123'),
+            'role' => 'ADMIN'
+        ]));
+
+        $this->client = Client::query()->create(['name' => 'Cliente VIP', 'email' => 'vip@email.com']);
+
+        Transaction::query()->create([
+            'client_id' => $this->client->id,
+            'status' => 'SUCCESS',
+            'amount' => 10000,
+            'card_last_numbers' => '1234'
+        ]);
+    });
+
+    it('deve listar clientes', function () {
+        $response = $this->getJson('/clients');
+
+        $response->assertStatus(200)
+            ->assertJsonFragment(['name' => 'Cliente VIP']);
+    });
+
+    it('deve exibir detalhes do cliente e seu histórico de compras', function () {
+        $response = $this->getJson("/clients/{$this->client->id}");
+
+        $response->assertStatus(200)
+            ->assertJsonFragment(['name' => 'Cliente VIP'])
+            ->assertJsonStructure(['id', 'name', 'email', 'transactions' => [['id', 'status', 'amount']]]);
+    });
+});

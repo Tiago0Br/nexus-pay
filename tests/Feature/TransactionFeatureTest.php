@@ -27,8 +27,8 @@ describe('Testes das rotas de transações', function () {
             'amount' => 45000
         ]);
 
-        Gateway::query()->create(['name' => 'Gateway 1', 'priority' => 1, 'is_active' => true]);
-        Gateway::query()->create(['name' => 'Gateway 2', 'priority' => 2, 'is_active' => true]);
+        $this->gateway1 = Gateway::query()->create(['name' => 'Gateway 1', 'priority' => 1, 'is_active' => true]);
+        $this->gateway2 = Gateway::query()->create(['name' => 'Gateway 2', 'priority' => 2, 'is_active' => true]);
     });
 
     it('deve processar a compra com sucesso no Gateway 1', function () {
@@ -79,7 +79,7 @@ describe('Testes das rotas de transações', function () {
             'amount' => 45000,
             'status' => 'SUCCESS',
             'external_id' => 'ext_gateway_2_id',
-            'gateway_id' => 2
+            'gateway_id' => $this->gateway2->id
         ]);
     });
 
@@ -115,7 +115,7 @@ describe('Testes das rotas de transações', function () {
 
         $transaction = Transaction::query()->create([
             'client_id' => $client->id,
-            'gateway_id' => 1,
+            'gateway_id' => $this->gateway1->id,
             'external_id' => 'ext_123_abc',
             'status' => 'SUCCESS',
             'amount' => 45000,
@@ -146,7 +146,7 @@ describe('Testes das rotas de transações', function () {
 
         $transaction = Transaction::query()->create([
             'client_id' => $client->id,
-            'gateway_id' => 1,
+            'gateway_id' => $this->gateway1->id,
             'external_id' => 'ext_999_xyz',
             'status' => 'CHARGED_BACK',
             'amount' => 45000,
@@ -157,5 +157,41 @@ describe('Testes das rotas de transações', function () {
 
         $response->assertStatus(400)
             ->assertJsonFragment(['message' => 'Esta transação já foi reembolsada anteriormente.']);
+    });
+
+    it('deve listar todas as transacoes com os relacionamentos de cliente e produtos', function () {
+        $client = Client::query()->create(['name' => 'Comprador', 'email' => 'compra@email.com']);
+
+        Transaction::query()->create([
+            'client_id' => $client->id,
+            'status' => 'SUCCESS',
+            'amount' => 5000,
+            'card_last_numbers' => '9999'
+        ]);
+
+        $response = $this->getJson('/transactions');
+
+        $response->assertStatus(200)
+            ->assertJsonFragment(['status' => 'SUCCESS'])
+            ->assertJsonStructure([
+                '*' => ['id', 'amount', 'client_id', 'gateway_id']
+            ]);
+    });
+
+    it('deve listar detalhes de uma transacao especifica', function () {
+        $client = Client::query()->create(['name' => 'Comprador Unico', 'email' => 'unico@email.com']);
+
+        $transaction = Transaction::query()->create([
+            'client_id' => $client->id,
+            'status' => 'SUCCESS',
+            'amount' => 7500,
+            'card_last_numbers' => '0000'
+        ]);
+
+        $response = $this->getJson("/transactions/$transaction->id");
+
+        $response->assertStatus(200)
+            ->assertJsonFragment(['amount' => 7500])
+            ->assertJsonFragment(['name' => 'Comprador Unico']);
     });
 });
