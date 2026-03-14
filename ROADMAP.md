@@ -63,10 +63,10 @@
 
 ## 📍 Fase 6: Entrega (Domingo)
 
-- [ ] Escrever `README.md` detalhado:
-    - [ ] Passo a passo de instalação.
-    - [ ] Como rodar o Docker.
-    - [ ] Explicação da arquitetura Multi-Gateway.
-- [ ] Revisar código (Clean Architecture, responsabilidades separadas).
-- [ ] Realizar commit final.
-- [ ] Enviar repositório do Github!
+- [X] Escrever `README.md` detalhado:
+    - [X] Passo a passo de instalação.
+    - [X] Como rodar o Docker.
+    - [X] Explicação da arquitetura Multi-Gateway.
+- [X] Revisar código (Clean Architecture, responsabilidades separadas).
+- [X] Realizar commit final.
+- [X] Enviar repositório do Github!
